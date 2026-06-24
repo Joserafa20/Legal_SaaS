@@ -138,9 +138,8 @@ export default function Users() {
                   onChange={(e) => setRoleId(Number(e.target.value))}
                   className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
                 >
-                  <option value={2}>Abogado</option>
                   <option value={1}>Admin</option>
-                  <option value={3}>Cliente</option>
+                  <option value={2}>Abogado</option>
                 </select>
               </div>
             </div>
