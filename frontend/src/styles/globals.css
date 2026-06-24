@@ -4,69 +4,124 @@
 
 @layer base {
   body {
-    @apply bg-surface font-body text-on-surface antialiased;
+    @apply antialiased;
+    background-color: #f7f9fc;
+    color: #191c1e;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  .dark body {
+    background-color: #0d0e0f;
+    color: #e0e3e6;
   }
 
   h1, h2, h3, h4 {
-    @apply font-headline text-balance;
+    font-family: Public Sans, system-ui, sans-serif;
+    text-wrap: balance;
   }
 
   p {
-    @apply text-pretty;
+    text-wrap: pretty;
   }
 
   ::selection {
-    @apply bg-primary-fixed-dim/30 text-primary;
+    background-color: #aac7fd4d;
+    color: #001430;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-container/50 disabled:opacity-50 disabled:pointer-events-none font-label;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-container/50 disabled:opacity-50 disabled:pointer-events-none;
+    font-family: Inter, system-ui, sans-serif;
   }
 
   .btn-primary {
-    @apply bg-primary-container text-white hover:brightness-110 active:scale-[0.98] shadow-ambient;
+    background-color: #002855;
+    color: #ffffff;
+    box-shadow: 0 8px 32px 0 rgba(0, 20, 48, 0.06);
   }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-primary:active { transform: scale(0.98); }
 
   .btn-secondary {
-    @apply bg-surface-high text-on-surface hover:bg-surface-highest active:bg-surface-container;
+    background-color: #e6e8eb;
+    color: #191c1e;
   }
+  .btn-secondary:hover { background-color: #e0e3e6; }
+  .btn-secondary:active { background-color: #eceef1; }
 
   .btn-danger {
-    @apply bg-error text-white hover:brightness-110 active:scale-[0.98];
+    background-color: #ba1a1a;
+    color: #ffffff;
   }
+  .btn-danger:hover { filter: brightness(1.1); }
 
   .btn-ghost {
-    @apply bg-transparent text-on-surface-variant hover:bg-surface-container active:bg-surface-high;
+    background-color: transparent;
+    color: #43474f;
   }
+  .btn-ghost:hover { background-color: #eceef1; }
+  .btn-ghost:active { background-color: #e6e8eb; }
 
   .card {
-    @apply bg-surface-lowest rounded-xl;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
   }
 
   .card-hover {
-    @apply card transition-all duration-200 hover:bg-surface-low;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
   }
+  .card-hover:hover { background-color: #f2f4f7; }
 
   .input {
-    @apply w-full h-12 px-4 text-sm bg-surface-low rounded-lg text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container transition-all;
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    background-color: #f2f4f7;
+    border-radius: 0.5rem;
+    color: #191c1e;
+    outline: none;
+    transition: all 0.2s;
   }
+  .input::placeholder { color: #747780; }
+  .input:focus { ring: 2px solid #002855; box-shadow: 0 0 0 2px #002855; }
+  .dark .input { background-color: #262935; color: #e0e3e6; }
 
   .label {
-    @apply block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5;
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #43474f;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.375rem;
   }
 
   .badge {
-    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 700;
   }
 
   .section-title {
-    @apply text-xl font-headline font-bold text-primary;
+    font-family: Public Sans, system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #001430;
   }
 
   .glass-panel {
-    @apply bg-surface-lowest/70 backdrop-blur-xl;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 }
 
@@ -92,15 +147,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-outline-variant rounded-full;
+  background-color: #c4c6d0;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-outline;
+  background-color: #747780;
 }
 
 @media (prefers-reduced-motion: reduce) {
