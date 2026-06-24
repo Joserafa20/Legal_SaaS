@@ -1,0 +1,25 @@
+# Entorno
+.env
+*.db
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+
+# Uploads
+uploads/
+case_documents/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
