@@ -6,12 +6,14 @@ export default function AIAssistant() {
   const caseId = searchParams.get('caseId') || undefined
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in h-[calc(100vh-8rem)] flex flex-col">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">Asistente IA Legal</h1>
-        <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Consulte, investigue y analice con inteligencia artificial</p>
+        <h1 className="text-3xl font-headline font-extrabold text-primary tracking-tight">Asistente IA Legal</h1>
+        <p className="mt-1.5 text-on-surface-variant">Consulte, investigue y analice con inteligencia artificial</p>
       </div>
-      <AIChat caseId={caseId} />
+      <div className="flex-1">
+        <AIChat caseId={caseId} />
+      </div>
     </div>
   )
 }

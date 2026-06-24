@@ -4,19 +4,12 @@ interface LoadingProps {
 }
 
 export default function Loading({ size = 'md', text }: LoadingProps) {
-  const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
-  }
+  const sizes = { sm: 'h-4 w-4', md: 'h-8 w-8', lg: 'h-12 w-12' }
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 animate-fade-in">
-      <div className="relative">
-        <div className={`${sizeClasses[size]} border-2 border-neutral-200 dark:border-neutral-700 rounded-full`} />
-        <div className={`${sizeClasses[size]} border-2 border-transparent border-t-primary-600 rounded-full absolute inset-0 animate-spin`} />
-      </div>
-      {text && <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">{text}</p>}
+    <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
+      <div className={`${sizes[size]} border-2 border-outline-variant border-t-primary-container rounded-full animate-spin`} />
+      {text && <p className="mt-4 text-sm text-on-surface-variant font-medium">{text}</p>}
     </div>
   )
 }
