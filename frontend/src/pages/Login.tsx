@@ -1,18 +1,15 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import LoginForm from '../components/auth/LoginForm'
-import { FiShield } from 'react-icons/fi'
+import { FiBookOpen } from 'react-icons/fi'
 
 export default function Login() {
   const { isAuthenticated, isLoading } = useAuth()
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
-        <div className="relative w-10 h-10">
-          <div className="w-10 h-10 border-2 border-neutral-200 dark:border-neutral-700 rounded-full" />
-          <div className="w-10 h-10 border-2 border-transparent border-t-primary-600 rounded-full absolute inset-0 animate-spin" />
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-legal-50 dark:bg-legal-900">
+        <div className="animate-spin w-8 h-8 border-4 border-legal-200 border-t-primary-600 rounded-full" />
       </div>
     )
   }
@@ -22,25 +19,25 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-50 dark:bg-neutral-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-sm animate-fade-in">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-600 shadow-lg shadow-primary-600/20 mb-5">
-            <FiShield className="w-7 h-7 text-white" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 dark:from-legal-900 dark:to-legal-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <div className="flex justify-center">
+            <FiBookOpen className="w-12 h-12 text-primary-600" />
           </div>
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">
+          <h2 className="mt-6 text-3xl font-extrabold text-legal-900 dark:text-white">
             Legal SaaS
-          </h1>
-          <p className="mt-1.5 text-sm text-neutral-500 dark:text-neutral-400">
+          </h2>
+          <p className="mt-2 text-sm text-legal-600 dark:text-legal-300">
             Gestión Jurídica con Inteligencia Artificial
           </p>
         </div>
 
-        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-700 p-6">
+        <div className="bg-white dark:bg-legal-800 py-8 px-4 shadow-xl sm:rounded-lg sm:px-10">
           <LoginForm />
         </div>
 
-        <p className="mt-6 text-center text-xs text-neutral-400 dark:text-neutral-500">
+        <p className="text-center text-xs text-legal-500 dark:text-legal-400">
           Acceso seguro solo para personal autorizado
         </p>
       </div>

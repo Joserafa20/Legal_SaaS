@@ -6,7 +6,7 @@ import { deadlineService } from '../services/deadlineService'
 import CaseCard from '../components/cases/CaseCard'
 import DeadlineBadge from '../components/deadlines/DeadlineBadge'
 import Loading from '../components/common/Loading'
-import { FiBriefcase, FiClock, FiAlertTriangle, FiArrowRight } from 'react-icons/fi'
+import { FiBriefcase, FiClock, FiAlertTriangle } from 'react-icons/fi'
 
 export default function Dashboard() {
   const [cases, setCases] = useState<Case[]>([])
@@ -39,54 +39,51 @@ export default function Dashboard() {
   if (isLoading) return <Loading text="Cargando panel..." />
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">Panel Principal</h1>
-        <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Resumen general de su actividad jurídica</p>
-      </div>
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold text-legal-900 dark:text-white">Panel Principal</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="card p-5 animate-slide-up" style={{ animationDelay: '0ms' }}>
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-primary-50 dark:bg-primary-900/20">
-              <FiBriefcase className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white dark:bg-legal-800 rounded-xl p-4 border border-legal-200 dark:border-legal-700">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
+              <FiBriefcase className="w-6 h-6 text-primary-600 dark:text-primary-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">Casos Activos</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">{cases.length}</p>
+                    <p className="text-sm text-legal-500">Casos Activos</p>
+              <p className="text-2xl font-bold text-legal-900 dark:text-white">{cases.length}</p>
             </div>
           </div>
         </div>
 
-        <div className="card p-5 animate-slide-up" style={{ animationDelay: '100ms' }}>
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-900/20">
-              <FiClock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+        <div className="bg-white dark:bg-legal-800 rounded-xl p-4 border border-legal-200 dark:border-legal-700">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+              <FiClock className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">Vencimientos Próximos</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">{upcomingDeadlines.length}</p>
+                    <p className="text-sm text-legal-500">Vencimientos Próximos</p>
+              <p className="text-2xl font-bold text-legal-900 dark:text-white">{upcomingDeadlines.length}</p>
             </div>
           </div>
         </div>
 
-        <div className="card p-5 animate-slide-up" style={{ animationDelay: '200ms' }}>
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20">
-              <FiAlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
+        <div className="bg-white dark:bg-legal-800 rounded-xl p-4 border border-legal-200 dark:border-legal-700">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
+              <FiAlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">Vencidos</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">{overdueDeadlines.length}</p>
+                    <p className="text-sm text-legal-500">Vencidos</p>
+              <p className="text-2xl font-bold text-legal-900 dark:text-white">{overdueDeadlines.length}</p>
             </div>
           </div>
         </div>
       </div>
 
       {overdueDeadlines.length > 0 && (
-        <div className="bg-red-50 dark:bg-red-900/15 rounded-xl border border-red-200 dark:border-red-800/50 p-5 animate-slide-up">
-          <h3 className="text-sm font-semibold text-red-800 dark:text-red-300 flex items-center gap-2 mb-3">
-            <FiAlertTriangle className="w-4 h-4" />
+        <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
+          <h3 className="text-lg font-semibold text-red-800 dark:text-red-300 mb-3 flex items-center gap-2">
+            <FiAlertTriangle className="w-5 h-5" />
             Vencimientos Vencidos
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -97,21 +94,15 @@ export default function Dashboard() {
         </div>
       )}
 
-      <section className="animate-slide-up">
+      <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="section-title">Casos Activos</h2>
-          <Link
-            to="/cases"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
+          <h2 className="text-lg font-semibold text-legal-900 dark:text-white">Casos Activos</h2>
+          <Link to="/cases" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
             Ver todos
-            <FiArrowRight className="w-4 h-4" />
           </Link>
         </div>
         {cases.length === 0 ? (
-          <div className="card p-8 text-center">
-            <p className="text-neutral-500 dark:text-neutral-400 text-sm">No hay casos activos.</p>
-          </div>
+          <p className="text-legal-500">No hay casos activos.</p>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {cases.map((caseItem) => (
@@ -119,37 +110,33 @@ export default function Dashboard() {
             ))}
           </div>
         )}
-      </section>
+      </div>
 
-      <section className="animate-slide-up">
+      <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="section-title">Vencimientos Próximos</h2>
-          <Link
-            to="/calendar"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
+          <h2 className="text-lg font-semibold text-legal-900 dark:text-white">Vencimientos Próximos</h2>
+          <Link to="/calendar" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
             Ver calendario
-            <FiArrowRight className="w-4 h-4" />
           </Link>
         </div>
         {upcomingDeadlines.length === 0 ? (
-          <div className="card p-8 text-center">
-            <p className="text-neutral-500 dark:text-neutral-400 text-sm">No hay vencimientos próximos.</p>
-          </div>
+          <p className="text-legal-500">No hay vencimientos próximos.</p>
         ) : (
-          <div className="card divide-y divide-neutral-200 dark:divide-neutral-700 overflow-hidden">
+          <div className="bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 divide-y divide-legal-200 dark:divide-legal-700">
             {upcomingDeadlines.map((deadline) => (
-              <div key={deadline.id} className="p-4 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-colors">
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-neutral-900 dark:text-white truncate">{deadline.title}</p>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">{deadline.caseTitle}</p>
+              <div key={deadline.id} className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-legal-900 dark:text-white">{deadline.title}</p>
+                    <p className="text-sm text-legal-500">{deadline.caseTitle}</p>
+                  </div>
+                  <DeadlineBadge deadline={deadline} />
                 </div>
-                <DeadlineBadge deadline={deadline} />
               </div>
             ))}
           </div>
         )}
-      </section>
+      </div>
     </div>
   )
 }

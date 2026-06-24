@@ -34,11 +34,11 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 
 function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+    <div className="min-h-screen bg-legal-50 dark:bg-legal-900">
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   )

@@ -4,65 +4,37 @@
 
 @layer base {
   body {
-    @apply bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased;
-  }
-
-  h1, h2, h3, h4 {
-    @apply text-balance;
-  }
-
-  p {
-    @apply text-pretty;
-  }
-
-  ::selection {
-    @apply bg-primary-500/20 text-primary-900 dark:text-primary-100;
+    @apply bg-legal-50 dark:bg-legal-900 text-legal-900 dark:text-white;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-50 dark:focus:ring-offset-neutral-900 disabled:opacity-50 disabled:pointer-events-none;
+    @apply px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
 
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus:ring-primary-500 shadow-sm;
+    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
   }
 
   .btn-secondary {
-    @apply bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 active:bg-neutral-100 dark:active:bg-neutral-600 focus:ring-neutral-400 shadow-sm;
+    @apply bg-legal-200 dark:bg-legal-700 text-legal-900 dark:text-white hover:bg-legal-300 dark:hover:bg-legal-600 focus:ring-legal-500;
   }
 
   .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500 shadow-sm;
-  }
-
-  .btn-ghost {
-    @apply bg-transparent text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 active:bg-neutral-200 dark:active:bg-neutral-700 focus:ring-neutral-400;
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
   }
 
   .card {
-    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700;
-  }
-
-  .card-hover {
-    @apply card transition-all duration-200 hover:shadow-md hover:border-neutral-300 dark:hover:border-neutral-600;
+    @apply bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 p-4;
   }
 
   .input {
-    @apply w-full px-4 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-500 transition-all duration-200;
+    @apply w-full px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-legal-700 text-legal-900 dark:text-white;
   }
 
   .label {
-    @apply block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5;
-  }
-
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
-  }
-
-  .section-title {
-    @apply text-lg font-semibold text-neutral-900 dark:text-neutral-100;
+    @apply block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1;
   }
 }
 
@@ -82,26 +54,20 @@
   }
 }
 
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-legal-100 dark:bg-legal-800;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-300 dark:bg-neutral-600 rounded-full;
+  @apply bg-legal-300 dark:bg-legal-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-400 dark:bg-neutral-500;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+  @apply bg-legal-400 dark:bg-legal-500;
 }
