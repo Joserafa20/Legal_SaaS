@@ -68,32 +68,36 @@ export default function CreateCase() {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index))
   }
 
-  const inputClass = "w-full px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in max-w-2xl">
       <div className="flex items-center gap-4">
-        <Link to="/cases" className="text-legal-600 dark:text-legal-300 hover:text-primary-600">
+        <Link
+          to="/cases"
+          className="p-2 rounded-lg text-neutral-500 hover:text-primary-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+        >
           <FiArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="text-2xl font-bold text-legal-900 dark:text-white">Nuevo Caso</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">Nuevo Caso</h1>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">Registre un nuevo caso en el sistema</p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700 space-y-6 max-w-2xl">
+      <form onSubmit={handleSubmit} className="card p-6 space-y-6">
         <div>
-          <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Título *</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className={inputClass} placeholder="Título del caso" />
+          <label className="label">Título *</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="input" placeholder="Título del caso" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Descripción</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className={inputClass} placeholder="Descripción del caso" />
+          <label className="label">Descripción</label>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className="input" placeholder="Descripción del caso" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Tipo de Caso</label>
-            <select value={caseType} onChange={(e) => setCaseType(e.target.value)} className={inputClass}>
+            <label className="label">Tipo de Caso</label>
+            <select value={caseType} onChange={(e) => setCaseType(e.target.value)} className="input">
               <option value="">Seleccione...</option>
               <option value="civil">Civil</option>
               <option value="laboral">Laboral</option>
@@ -105,8 +109,8 @@ export default function CreateCase() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Jurisdicción</label>
-            <select value={jurisdiction} onChange={(e) => setJurisdiction(e.target.value)} className={inputClass}>
+            <label className="label">Jurisdicción</label>
+            <select value={jurisdiction} onChange={(e) => setJurisdiction(e.target.value)} className="input">
               <option value="CGP">CGP</option>
               <option value="CPACA">CPACA</option>
             </select>
@@ -115,72 +119,71 @@ export default function CreateCase() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Juzgado</label>
-            <input type="text" value={courtName} onChange={(e) => setCourtName(e.target.value)} className={inputClass} placeholder="Nombre del juzgado" />
+            <label className="label">Juzgado</label>
+            <input type="text" value={courtName} onChange={(e) => setCourtName(e.target.value)} className="input" placeholder="Nombre del juzgado" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Juez</label>
-            <input type="text" value={judgeName} onChange={(e) => setJudgeName(e.target.value)} className={inputClass} placeholder="Nombre del juez" />
+            <label className="label">Juez</label>
+            <input type="text" value={judgeName} onChange={(e) => setJudgeName(e.target.value)} className="input" placeholder="Nombre del juez" />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Parte Contraria</label>
-          <input type="text" value={opposingParty} onChange={(e) => setOpposingParty(e.target.value)} className={inputClass} placeholder="Nombre de la parte contraria" />
+          <label className="label">Parte Contraria</label>
+          <input type="text" value={opposingParty} onChange={(e) => setOpposingParty(e.target.value)} className="input" placeholder="Nombre de la parte contraria" />
         </div>
 
-        <div className="border-t border-legal-200 dark:border-legal-700 pt-4">
-          <h3 className="text-sm font-semibold text-legal-900 dark:text-white mb-3">Datos del Cliente</h3>
+        <div className="border-t border-neutral-200 dark:border-neutral-700 pt-5">
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">Datos del Cliente</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Nombre</label>
-              <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} className={inputClass} placeholder="Nombre del cliente" />
+              <label className="label">Nombre</label>
+              <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} className="input" placeholder="Nombre del cliente" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Correo</label>
-              <input type="email" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} className={inputClass} placeholder="correo@ejemplo.com" />
+              <label className="label">Correo</label>
+              <input type="email" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} className="input" placeholder="correo@ejemplo.com" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Teléfono</label>
-              <input type="text" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} className={inputClass} placeholder="Teléfono del cliente" />
+              <label className="label">Teléfono</label>
+              <input type="text" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} className="input" placeholder="Teléfono del cliente" />
             </div>
           </div>
         </div>
 
-          <div className="border-t border-legal-200 dark:border-legal-700 pt-4">
-            <h3 className="text-sm font-semibold text-legal-900 dark:text-white mb-3">Documentos Adjuntos</h3>
-            <input ref={fileInputRef} type="file" multiple onChange={handleFileSelect} className="hidden" />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg text-legal-600 dark:text-legal-300 hover:border-primary-400 hover:text-primary-600 transition-colors"
-            >
-              <FiPaperclip className="w-5 h-5" />
-              Seleccionar Archivos
-            </button>
-            {selectedFiles.length > 0 && (
-              <div className="mt-3 space-y-2">
-                {selectedFiles.map((file, i) => (
-                  <div key={i} className="flex items-center justify-between px-3 py-2 bg-legal-50 dark:bg-legal-700/50 rounded-lg text-sm">
-                    <span className="text-legal-700 dark:text-legal-300 truncate">{file.name}</span>
-                    <button type="button" onClick={() => removeFile(i)} className="text-legal-400 hover:text-red-500 ml-2">
-                      <FiX className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-            <p className="text-xs text-legal-400 mt-2">Los archivos se subirán después de crear el caso.</p>
-          </div>
-
+        <div className="border-t border-neutral-200 dark:border-neutral-700 pt-5">
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">Documentos Adjuntos</h3>
+          <input ref={fileInputRef} type="file" multiple onChange={handleFileSelect} className="hidden" />
           <button
-            type="submit"
-            disabled={submitting}
-            className="flex items-center gap-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="btn btn-secondary text-sm"
           >
-            <FiSave className="w-5 h-5" />
+            <FiPaperclip className="w-4 h-4" />
+            Seleccionar Archivos
+          </button>
+          {selectedFiles.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {selectedFiles.map((file, i) => (
+                <div key={i} className="flex items-center justify-between px-3 py-2 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg text-sm">
+                  <span className="text-neutral-700 dark:text-neutral-300 truncate">{file.name}</span>
+                  <button type="button" onClick={() => removeFile(i)} className="text-neutral-400 hover:text-red-500 ml-2">
+                    <FiX className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="text-xs text-neutral-400 mt-2">Los archivos se subirán después de crear el caso.</p>
+        </div>
+
+        <div className="flex items-center gap-3 pt-2">
+          <button type="submit" disabled={submitting} className="btn btn-primary">
+            <FiSave className="w-4 h-4" />
             {submitting ? 'Creando...' : 'Crear Caso'}
           </button>
+          <Link to="/cases" className="btn btn-ghost">Cancelar</Link>
+        </div>
       </form>
     </div>
   )

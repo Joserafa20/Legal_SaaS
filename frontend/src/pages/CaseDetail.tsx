@@ -82,96 +82,96 @@ export default function CaseDetail() {
 
   if (!caseData) {
     return (
-      <div className="text-center py-12">
-        <p className="text-legal-500">Caso no encontrado.</p>
-        <Link to="/cases" className="text-primary-600 hover:text-primary-700 mt-4 inline-block">
+      <div className="card p-12 text-center animate-fade-in">
+        <p className="text-neutral-500 dark:text-neutral-400">Caso no encontrado.</p>
+        <Link to="/cases" className="btn btn-primary mt-4 inline-flex">
           Volver a casos
         </Link>
       </div>
     )
   }
 
-  const statusColors = {
-    open: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    in_progress: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-    pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    closed: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
+  const statusColors: Record<string, string> = {
+    open: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
+    in_progress: 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 border-blue-200 dark:border-blue-800',
+    pending: 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+    closed: 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400 border-neutral-200 dark:border-neutral-700',
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <Link
           to="/cases"
-          className="flex items-center gap-2 text-legal-600 dark:text-legal-300 hover:text-primary-600"
+          className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
         >
-          <FiArrowLeft className="w-5 h-5" />
+          <FiArrowLeft className="w-4 h-4" />
           Volver a casos
         </Link>
 
-        <div className="flex items-center gap-2">
-          <button className="p-2 text-legal-600 dark:text-legal-300 hover:text-primary-600 rounded-lg hover:bg-legal-100 dark:hover:bg-legal-700">
-            <FiEdit2 className="w-5 h-5" />
+        <div className="flex items-center gap-1">
+          <button className="btn btn-ghost p-2">
+            <FiEdit2 className="w-4 h-4" />
           </button>
           <button
             onClick={handleDelete}
-            className="p-2 text-legal-600 dark:text-legal-300 hover:text-red-600 rounded-lg hover:bg-legal-100 dark:hover:bg-legal-700"
+            className="btn btn-ghost p-2 hover:text-red-600 dark:hover:text-red-400"
           >
-            <FiTrash2 className="w-5 h-5" />
+            <FiTrash2 className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700">
+      <div className="card p-6">
         <div className="flex items-start justify-between mb-4">
-          <div>
-            <span className={`px-3 py-1 text-sm font-medium rounded-full ${statusColors[caseData.status]}`}>
+          <div className="space-y-2">
+            <span className={`inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full border ${statusColors[caseData.status]}`}>
               {{'open':'Abierto','in_progress':'En Progreso','pending':'Pendiente','closed':'Cerrado'}[caseData.status] || caseData.status.replace('_', ' ')}
             </span>
-            <h1 className="text-2xl font-bold text-legal-900 dark:text-white mt-2">
+            <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">
               {caseData.title}
             </h1>
-            <p className="text-legal-500">Caso #{caseData.caseNumber}</p>
+            <p className="text-sm text-neutral-500">Caso #{caseData.caseNumber}</p>
           </div>
         </div>
 
-        <p className="text-legal-700 dark:text-legal-200 mb-6">{caseData.description}</p>
+        <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-6">{caseData.description}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center gap-3">
-            <FiUser className="w-5 h-5 text-legal-400" />
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/30">
+            <FiUser className="w-5 h-5 text-neutral-400 flex-shrink-0" />
             <div>
-                    <p className="text-sm text-legal-500">Cliente</p>
-              <p className="font-medium text-legal-900 dark:text-white">{caseData.clientName}</p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">Cliente</p>
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">{caseData.clientName}</p>
             </div>
           </div>
 
           {caseData.courtName && (
-            <div className="flex items-center gap-3">
-              <FiMapPin className="w-5 h-5 text-legal-400" />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/30">
+              <FiMapPin className="w-5 h-5 text-neutral-400 flex-shrink-0" />
               <div>
-                    <p className="text-sm text-legal-500">Juzgado</p>
-                <p className="font-medium text-legal-900 dark:text-white">{caseData.courtName}</p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">Juzgado</p>
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">{caseData.courtName}</p>
               </div>
             </div>
           )}
 
           {caseData.judgeName && (
-            <div className="flex items-center gap-3">
-              <FiUser className="w-5 h-5 text-legal-400" />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/30">
+              <FiUser className="w-5 h-5 text-neutral-400 flex-shrink-0" />
               <div>
-                    <p className="text-sm text-legal-500">Juez</p>
-                <p className="font-medium text-legal-900 dark:text-white">{caseData.judgeName}</p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">Juez</p>
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">{caseData.judgeName}</p>
               </div>
             </div>
           )}
 
           {caseData.nextDeadline && (
-            <div className="flex items-center gap-3">
-              <FiCalendar className="w-5 h-5 text-legal-400" />
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/30">
+              <FiCalendar className="w-5 h-5 text-neutral-400 flex-shrink-0" />
               <div>
-                    <p className="text-sm text-legal-500">Próximo Vencimiento</p>
-                <p className="font-medium text-legal-900 dark:text-white">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">Próximo Vencimiento</p>
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
                   {new Date(caseData.nextDeadline).toLocaleDateString()}
                 </p>
               </div>
@@ -179,14 +179,14 @@ export default function CaseDetail() {
           )}
         </div>
 
-        {caseData.tags.length > 0 && (
-          <div className="flex items-center gap-2 mb-6">
-            <FiTag className="w-5 h-5 text-legal-400" />
-            <div className="flex flex-wrap gap-2">
+        {caseData.tags && caseData.tags.length > 0 && (
+          <div className="flex items-start gap-2 mb-6">
+            <FiTag className="w-5 h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+            <div className="flex flex-wrap gap-1.5">
               {caseData.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 text-xs bg-legal-100 dark:bg-legal-700 text-legal-600 dark:text-legal-300 rounded-full"
+                  className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300"
                 >
                   {tag}
                 </span>
@@ -195,28 +195,34 @@ export default function CaseDetail() {
           </div>
         )}
 
-        <CaseTimeline caseId={caseData.id} />
+        <div className="border-t border-neutral-200 dark:border-neutral-700 pt-6">
+          <CaseTimeline caseId={caseData.id} />
+        </div>
 
-        <div className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700 mt-6">
+        <div className="border-t border-neutral-200 dark:border-neutral-700 pt-6 mt-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-legal-900 dark:text-white">Documentos</h3>
-            <label className="flex items-center gap-2 px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 cursor-pointer text-sm">
+            <h3 className="section-title">Documentos</h3>
+            <label className="btn btn-primary text-sm cursor-pointer">
               <FiUpload className="w-4 h-4" />
               Subir Documento
               <input type="file" onChange={handleUploadDocument} className="hidden" />
             </label>
           </div>
           {documents.length === 0 ? (
-            <p className="text-legal-500 text-sm">No hay documentos adjuntos.</p>
+            <div className="text-center py-6">
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">No hay documentos adjuntos.</p>
+            </div>
           ) : (
             <div className="space-y-2">
               {documents.map((doc) => (
-                <div key={doc.id} className="flex items-center justify-between p-3 bg-legal-50 dark:bg-legal-700/50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <FiFile className="w-5 h-5 text-legal-400" />
-                    <div>
-                      <p className="text-sm font-medium text-legal-900 dark:text-white">{doc.file_name}</p>
-                      <p className="text-xs text-legal-500">
+                <div key={doc.id} className="flex items-center justify-between p-3 rounded-lg bg-neutral-50 dark:bg-neutral-700/30 hover:bg-neutral-100 dark:hover:bg-neutral-700/50 transition-colors">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="p-2 rounded-lg bg-white dark:bg-neutral-700 shadow-sm">
+                      <FiFile className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-neutral-900 dark:text-white truncate">{doc.file_name}</p>
+                      <p className="text-xs text-neutral-500">
                         {doc.file_size ? `${(doc.file_size / 1024).toFixed(1)} KB` : ''}
                         {doc.created_at ? ` - ${new Date(doc.created_at).toLocaleDateString()}` : ''}
                       </p>
@@ -226,7 +232,7 @@ export default function CaseDetail() {
                     href={caseDocumentService.getDownloadUrl(doc.file_url)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-legal-400 hover:text-primary-600 transition-colors"
+                    className="p-2 rounded-lg text-neutral-400 hover:text-primary-600 hover:bg-white dark:hover:bg-neutral-700 transition-colors"
                     title="Descargar"
                   >
                     <FiDownload className="w-4 h-4" />

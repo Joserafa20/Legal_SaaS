@@ -11,11 +11,12 @@ export default function Loading({ size = 'md', text }: LoadingProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
-      <div
-        className={`${sizeClasses[size]} border-4 border-legal-200 border-t-primary-600 rounded-full animate-spin`}
-      />
-      {text && <p className="mt-4 text-legal-600 dark:text-legal-300">{text}</p>}
+    <div className="flex flex-col items-center justify-center p-8 animate-fade-in">
+      <div className="relative">
+        <div className={`${sizeClasses[size]} border-2 border-neutral-200 dark:border-neutral-700 rounded-full`} />
+        <div className={`${sizeClasses[size]} border-2 border-transparent border-t-primary-600 rounded-full absolute inset-0 animate-spin`} />
+      </div>
+      {text && <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">{text}</p>}
     </div>
   )
 }

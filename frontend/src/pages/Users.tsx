@@ -4,7 +4,7 @@ import { userService } from '../services/userService'
 import { useAuth } from '../contexts/AuthContext'
 import Loading from '../components/common/Loading'
 import toast from 'react-hot-toast'
-import { FiUserPlus, FiTrash2, FiShield, FiMail, FiUser } from 'react-icons/fi'
+import { FiUserPlus, FiTrash2, FiShield, FiMail, FiUser, FiX } from 'react-icons/fi'
 
 export default function Users() {
   const { user: currentUser } = useAuth()
@@ -75,126 +75,133 @@ export default function Users() {
   if (isLoading) return <Loading text="Cargando usuarios..." />
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-legal-900 dark:text-white">Usuarios</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white tracking-tight">Usuarios</h1>
+          <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">Administración de usuarios del sistema</p>
+        </div>
         {isAdmin && (
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+            className="btn btn-primary"
           >
-            <FiUserPlus className="w-5 h-5" />
+            <FiUserPlus className="w-4 h-4" />
             Nuevo Usuario
           </button>
         )}
       </div>
 
       {showForm && (
-        <div className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700">
-          <h2 className="text-lg font-semibold text-legal-900 dark:text-white mb-4">Crear Nuevo Usuario</h2>
+        <div className="card p-6 animate-slide-up">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-semibold text-neutral-900 dark:text-white">Crear Nuevo Usuario</h2>
+            <button onClick={() => setShowForm(false)} className="btn btn-ghost p-1">
+              <FiX className="w-4 h-4" />
+            </button>
+          </div>
           <form onSubmit={handleCreate} className="space-y-4 max-w-md">
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Nombre Completo</label>
+              <label className="label">Nombre Completo</label>
               <div className="relative">
-                <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
+                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10"
                   placeholder="Nombre del abogado"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Correo Electrónico</label>
+              <label className="label">Correo Electrónico</label>
               <div className="relative">
-                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
+                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10"
                   placeholder="correo@ejemplo.com"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Contraseña</label>
+              <label className="label">Contraseña</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                className="input"
                 placeholder="Contraseña"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Rol</label>
+              <label className="label">Rol</label>
               <div className="relative">
-                <FiShield className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
+                <FiShield className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4 pointer-events-none" />
                 <select
                   value={roleId}
                   onChange={(e) => setRoleId(Number(e.target.value))}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10 appearance-none cursor-pointer"
                 >
                   <option value={1}>Admin</option>
                   <option value={2}>Abogado</option>
                 </select>
               </div>
             </div>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
-            >
-              {submitting ? 'Creando...' : 'Crear Usuario'}
-            </button>
+            <div className="flex items-center gap-3 pt-2">
+              <button type="submit" disabled={submitting} className="btn btn-primary">
+                {submitting ? 'Creando...' : 'Crear Usuario'}
+              </button>
+              <button type="button" onClick={() => setShowForm(false)} className="btn btn-ghost">Cancelar</button>
+            </div>
           </form>
         </div>
       )}
 
-      <div className="bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 overflow-hidden">
+      <div className="card overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-legal-200 dark:border-legal-700">
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Nombre</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Correo</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Rol</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Estado</th>
-              {isAdmin && <th className="text-right px-4 py-3 text-sm font-medium text-legal-500">Acciones</th>}
+            <tr className="border-b border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/50">
+              <th className="text-left px-4 py-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Nombre</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Correo</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Rol</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Estado</th>
+              {isAdmin && <th className="text-right px-4 py-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Acciones</th>}
             </tr>
           </thead>
-          <tbody className="divide-y divide-legal-200 dark:divide-legal-700">
+          <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700">
             {users.map((u) => (
-              <tr key={u.id} className="hover:bg-legal-50 dark:hover:bg-legal-700/50">
-                <td className="px-4 py-3 text-sm text-legal-900 dark:text-white">{u.full_name}</td>
-                <td className="px-4 py-3 text-sm text-legal-600 dark:text-legal-300">{u.email}</td>
-                <td className="px-4 py-3 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+              <tr key={u.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-colors">
+                <td className="px-4 py-3.5 text-sm font-medium text-neutral-900 dark:text-white">{u.full_name}</td>
+                <td className="px-4 py-3.5 text-sm text-neutral-500 dark:text-neutral-400">{u.email}</td>
+                <td className="px-4 py-3.5 text-sm">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                     (typeof u.role === 'object' && u.role?.name === 'admin')
-                      ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
+                      ? 'bg-violet-50 text-violet-700 dark:bg-violet-900/20 dark:text-violet-400'
                       : (typeof u.role === 'object' && u.role?.name === 'abogado')
-                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
-                      : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
+                      : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400'
                   }`}>
                     {typeof u.role === 'object' ? u.role.name : u.role}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                <td className="px-4 py-3.5 text-sm">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                     u.is_active !== false
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                      : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400'
+                      : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400'
                   }`}>
                     {u.is_active !== false ? 'Activo' : 'Inactivo'}
                   </span>
                 </td>
                 {isAdmin && (
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3.5 text-right">
                     <button
                       onClick={() => handleDelete(u)}
-                      className="p-1 text-legal-400 hover:text-red-600 transition-colors"
+                      className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                       title="Eliminar usuario"
                     >
                       <FiTrash2 className="w-4 h-4" />

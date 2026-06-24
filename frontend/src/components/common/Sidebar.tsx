@@ -11,27 +11,42 @@ const navigation = [
 
 export default function Sidebar() {
   return (
-    <div className="w-64 bg-white dark:bg-legal-800 border-r border-legal-200 dark:border-legal-700 min-h-screen">
-      <div className="p-4">
-        <nav className="space-y-1">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  isActive
-                    ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                    : 'text-legal-600 dark:text-legal-300 hover:bg-legal-50 dark:hover:bg-legal-700'
-                }`
-              }
-            >
-              <item.icon className="mr-3 h-5 w-5" />
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
+    <aside className="w-64 bg-white dark:bg-neutral-800 border-r border-neutral-200 dark:border-neutral-700 min-h-screen flex flex-col">
+      <div className="h-16 flex items-center px-6 border-b border-neutral-200 dark:border-neutral-700">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
+            <span className="text-white font-bold text-sm">LS</span>
+          </div>
+          <span className="text-base font-semibold text-neutral-900 dark:text-white">
+            Legal SaaS
+          </span>
+        </div>
       </div>
-    </div>
+
+      <nav className="flex-1 px-3 py-4 space-y-1">
+        {navigation.map((item) => (
+          <NavLink
+            key={item.name}
+            to={item.to}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                isActive
+                  ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700/50 hover:text-neutral-900 dark:hover:text-neutral-200'
+              }`
+            }
+          >
+            <item.icon className="w-5 h-5 flex-shrink-0" />
+            {item.name}
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="px-3 py-4 border-t border-neutral-200 dark:border-neutral-700">
+        <div className="text-xs text-neutral-400 dark:text-neutral-500 px-3">
+          Legal SaaS Colombia v1.0
+        </div>
+      </div>
+    </aside>
   )
 }

@@ -29,7 +29,7 @@ export default function CaseTimeline({ caseId }: CaseTimelineProps) {
   }
 
   const getEventIcon = (type: TimelineEvent['type']) => {
-    const icons = {
+    const icons: Record<string, React.ReactNode> = {
       created: <FiPlus className="w-4 h-4" />,
       updated: <FiEdit className="w-4 h-4" />,
       deadline_added: <FiClock className="w-4 h-4" />,
@@ -40,46 +40,50 @@ export default function CaseTimeline({ caseId }: CaseTimelineProps) {
   }
 
   const getEventColor = (type: TimelineEvent['type']) => {
-    const colors = {
-      created: 'bg-green-500',
+    const colors: Record<string, string> = {
+      created: 'bg-emerald-500',
       updated: 'bg-blue-500',
-      deadline_added: 'bg-yellow-500',
-      document_added: 'bg-purple-500',
-      note_added: 'bg-gray-500',
+      deadline_added: 'bg-amber-500',
+      document_added: 'bg-violet-500',
+      note_added: 'bg-neutral-500',
     }
-    return colors[type] || 'bg-gray-500'
+    return colors[type] || 'bg-neutral-500'
   }
 
   if (isLoading) return <Loading text="Cargando línea de tiempo..." />
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-legal-900 dark:text-white">Línea de Tiempo</h3>
+      <h3 className="section-title">Línea de Tiempo</h3>
 
       {events.length === 0 ? (
-        <p className="text-legal-500">No hay eventos en la línea de tiempo.</p>
+        <div className="card p-6 text-center">
+          <p className="text-neutral-500 dark:text-neutral-400 text-sm">No hay eventos en la línea de tiempo.</p>
+        </div>
       ) : (
         <div className="relative">
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-legal-200 dark:bg-legal-700" />
+          <div className="absolute left-4 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-700" />
 
           <div className="space-y-6">
             {events.map((event) => (
-              <div key={event.id} className="relative flex items-start">
-                <div className={`absolute left-0 w-8 h-8 ${getEventColor(event.type)} rounded-full flex items-center justify-center text-white`}>
+              <div key={event.id} className="relative flex items-start group">
+                <div className={`absolute left-0 w-8 h-8 ${getEventColor(event.type)} rounded-full flex items-center justify-center text-white shadow-sm ring-4 ring-white dark:ring-neutral-800`}>
                   {getEventIcon(event.type)}
                 </div>
 
-                <div className="ml-12">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-legal-900 dark:text-white">{event.title}</span>
-                    <span className="text-sm text-legal-500">
+                <div className="ml-12 pt-1">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-sm font-semibold text-neutral-900 dark:text-white">{event.title}</span>
+                    <span className="text-xs text-neutral-400 dark:text-neutral-500">
                       {new Date(event.date).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-sm text-legal-600 dark:text-legal-300 mt-1">
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-0.5 leading-relaxed">
                     {event.description}
                   </p>
-                    <p className="text-xs text-legal-400 mt-1">por {event.userName || 'Usuario'}</p>
+                  <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-1">
+                    por {event.userName || 'Usuario'}
+                  </p>
                 </div>
               </div>
             ))}

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent } from 'react'
 import { AIMessage } from '../../types'
 import { aiService } from '../../services/aiService'
-import { FiSend, FiLoader, FiTrash2, FiPaperclip, FiPlus, FiMessageSquare, FiX } from 'react-icons/fi'
+import { FiSend, FiTrash2, FiPaperclip, FiPlus, FiMessageSquare, FiX } from 'react-icons/fi'
 
 interface Conversation {
   id: string
@@ -64,10 +64,10 @@ export default function AIChat({ caseId }: { caseId?: string }) {
 
   const genName = (): string => {
     const max = conversations.reduce((n, c) => {
-      const m = c.name.match(/^Conversaci\u00f3n (\d+)$/)
+      const m = c.name.match(/^Conversación (\d+)$/)
       return m ? Math.max(n, parseInt(m[1])) : n
     }, 0)
-    return `Conversaci\u00f3n ${max + 1}`
+    return `Conversación ${max + 1}`
   }
 
   const newConversation = () => {
@@ -156,53 +156,80 @@ export default function AIChat({ caseId }: { caseId?: string }) {
   }
 
   return (
-    <div className="flex h-[600px] bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700">
-      <div className="w-56 shrink-0 bg-legal-50 dark:bg-legal-900 border-r border-legal-200 dark:border-legal-700 rounded-l-xl flex flex-col">
-        <div className="flex items-center justify-between p-3 border-b border-legal-200 dark:border-legal-700">
-          <h4 className="text-sm font-semibold text-legal-700 dark:text-legal-200">Conversaciones</h4>
-          <button onClick={newConversation} className="p-1 text-legal-400 hover:text-primary-600 transition-colors" title="Nueva conversación">
+    <div className="flex h-[600px] bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden animate-fade-in">
+      <div className="w-56 shrink-0 bg-neutral-50 dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-700 flex flex-col">
+        <div className="flex items-center justify-between p-3 border-b border-neutral-200 dark:border-neutral-700">
+          <h4 className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Conversaciones</h4>
+          <button onClick={newConversation} className="p-1.5 rounded-lg text-neutral-400 hover:text-primary-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-all" title="Nueva conversación">
             <FiPlus className="w-4 h-4" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto p-2 space-y-0.5">
           {conversations.length === 0 && (
-            <p className="text-xs text-legal-400 p-3">Sin conversaciones.</p>
+            <p className="text-xs text-neutral-400 p-2">Sin conversaciones.</p>
           )}
           {conversations.map(c => (
             <button
               key={c.id}
               onClick={() => switchConversation(c.id)}
-              className={`w-full text-left p-3 flex items-center gap-2 hover:bg-legal-100 dark:hover:bg-legal-700/50 transition-colors ${c.id === activeConvId ? 'bg-legal-100 dark:bg-legal-700' : ''}`}
+              className={`w-full text-left p-2 flex items-center gap-2 rounded-lg transition-colors ${
+                c.id === activeConvId
+                  ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700/50'
+              }`}
             >
-              <FiMessageSquare className="w-4 h-4 text-legal-400 shrink-0" />
-              <span className="text-sm text-legal-700 dark:text-legal-200 truncate flex-1">{c.name}</span>
-              <button onClick={(e) => deleteConversation(e, c.id)} className="p-0.5 text-legal-300 hover:text-red-500 shrink-0"><FiX className="w-3 h-3" /></button>
+              <FiMessageSquare className="w-4 h-4 shrink-0" />
+              <span className="text-sm truncate flex-1">{c.name}</span>
+              <button
+                onClick={(e) => deleteConversation(e, c.id)}
+                className="p-0.5 rounded text-neutral-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+              >
+                <FiX className="w-3 h-3" />
+              </button>
             </button>
           ))}
         </div>
       </div>
 
       <div className="flex flex-col flex-1 min-w-0">
-        <div className="flex items-center justify-between p-4 border-b border-legal-200 dark:border-legal-700">
-          <h3 className="text-lg font-semibold text-legal-900 dark:text-white truncate max-w-[200px]">{activeConv?.name || 'Chat'}</h3>
-          <button onClick={clearActive} className="p-2 text-legal-400 hover:text-red-500 transition-colors" title="Limpiar esta conversación">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-neutral-200 dark:border-neutral-700">
+          <h3 className="text-base font-semibold text-neutral-900 dark:text-white truncate">{activeConv?.name || 'Chat'}</h3>
+          <button
+            onClick={clearActive}
+            className="btn btn-ghost p-2 text-neutral-400 hover:text-red-500"
+            title="Limpiar esta conversación"
+          >
             <FiTrash2 className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {messages.length === 0 && (
-            <div className="text-center text-legal-500 py-8">
-              <p className="text-lg mb-2">Bienvenido al Asistente IA Legal</p>
-              <p className="text-sm">Pregunte sobre investigación jurídica, análisis de casos o redacción de documentos.</p>
+            <div className="flex flex-col items-center justify-center h-full text-center">
+              <div className="w-14 h-14 rounded-2xl bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center mb-4">
+                <FiMessageSquare className="w-7 h-7 text-primary-600 dark:text-primary-400" />
+              </div>
+              <p className="text-base font-semibold text-neutral-700 dark:text-neutral-300 mb-1">Bienvenido al Asistente IA Legal</p>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm">
+                Pregunte sobre investigación jurídica, análisis de casos o redacción de documentos.
+              </p>
             </div>
           )}
 
           {messages.map((message) => (
-            <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-lg p-3 ${message.role === 'user' ? 'bg-primary-600 text-white' : 'bg-legal-100 dark:bg-legal-700 text-legal-900 dark:text-white'}`}>
-                <p className="whitespace-pre-wrap">{message.content}</p>
-                <p className={`text-xs mt-1 ${message.role === 'user' ? 'text-primary-200' : 'text-legal-400'}`}>
+            <div
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+            >
+              <div
+                className={`max-w-[75%] rounded-2xl px-4 py-3 ${
+                  message.role === 'user'
+                    ? 'bg-primary-600 text-white rounded-tr-sm'
+                    : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-tl-sm'
+                }`}
+              >
+                <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                <p className={`text-xs mt-1.5 ${message.role === 'user' ? 'text-primary-200' : 'text-neutral-400 dark:text-neutral-500'}`}>
                   {new Date(message.timestamp).toLocaleTimeString()}
                 </p>
               </div>
@@ -210,9 +237,13 @@ export default function AIChat({ caseId }: { caseId?: string }) {
           ))}
 
           {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-legal-100 dark:bg-legal-700 rounded-lg p-3">
-                <FiLoader className="w-5 h-5 animate-spin text-legal-500" />
+            <div className="flex justify-start animate-fade-in">
+              <div className="bg-neutral-100 dark:bg-neutral-700 rounded-2xl rounded-tl-sm px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-primary-600 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-primary-600 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-primary-600 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
               </div>
             </div>
           )}
@@ -220,21 +251,42 @@ export default function AIChat({ caseId }: { caseId?: string }) {
           <div ref={messagesEndRef} />
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 border-t border-legal-200 dark:border-legal-700">
+        <form onSubmit={handleSubmit} className="p-4 border-t border-neutral-200 dark:border-neutral-700">
           {attachedFile && (
-            <div className="mb-2 px-3 py-1.5 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 rounded-lg text-sm flex items-center justify-between">
-              <span className="truncate mr-2">{attachedFile.name}</span>
-              <button type="button" onClick={() => setAttachedFile(null)} className="text-primary-500 hover:text-primary-700">&times;</button>
+            <div className="mb-3 px-3 py-2 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg text-sm flex items-center justify-between animate-fade-in">
+              <div className="flex items-center gap-2 min-w-0">
+                <FiPaperclip className="w-3.5 h-3.5 text-primary-600 dark:text-primary-400 shrink-0" />
+                <span className="truncate text-primary-700 dark:text-primary-300">{attachedFile.name}</span>
+              </div>
+              <button type="button" onClick={() => setAttachedFile(null)} className="p-0.5 rounded text-primary-500 hover:text-primary-700 hover:bg-primary-100 dark:hover:bg-primary-800 transition-colors ml-2">
+                <FiX className="w-3.5 h-3.5" />
+              </button>
             </div>
           )}
           <div className="flex gap-2">
             <input ref={fileInputRef} type="file" onChange={handleFileAttach} className="hidden" accept="*" />
-            <button type="button" onClick={() => fileInputRef.current?.click()} className="px-3 py-2 text-legal-400 hover:text-primary-600 border border-legal-300 dark:border-legal-600 rounded-lg hover:border-primary-400 transition-colors" title="Adjuntar archivo">
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="btn btn-ghost px-3 text-neutral-400 hover:text-primary-600"
+              title="Adjuntar archivo"
+            >
               <FiPaperclip className="w-5 h-5" />
             </button>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Haga una pregunta legal..." disabled={isLoading} className="flex-1 px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-legal-700 text-legal-900 dark:text-white disabled:opacity-50" />
-            <button type="submit" disabled={isLoading || (!input.trim() && !attachedFile)} className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed">
-              <FiSend className="w-5 h-5" />
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Haga una pregunta legal..."
+              disabled={isLoading}
+              className="input flex-1"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || (!input.trim() && !attachedFile)}
+              className="btn btn-primary px-4"
+            >
+              <FiSend className="w-4 h-4" />
             </button>
           </div>
         </form>
