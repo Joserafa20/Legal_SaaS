@@ -125,7 +125,7 @@ export default function CaseDetail() {
       <div className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <span className={`px-3 py-1 text-sm font-medium rounded-full ${statusColors[caseData.status]}`}>
+            <span className={`px-3 py-1 text-sm font-medium rounded-full ${statusColors[caseData.status as keyof typeof statusColors]}`}>
               {{'open':'Abierto','in_progress':'En Progreso','pending':'Pendiente','closed':'Cerrado'}[caseData.status] || caseData.status.replace('_', ' ')}
             </span>
             <h1 className="text-2xl font-bold text-legal-900 dark:text-white mt-2">

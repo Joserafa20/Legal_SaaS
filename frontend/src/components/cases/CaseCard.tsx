@@ -27,10 +27,10 @@ export default function CaseCard({ caseData }: CaseCardProps) {
       className="block p-4 bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 hover:shadow-lg transition-shadow"
     >
       <div className="flex items-start justify-between mb-2">
-        <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[caseData.status]}`}>
+        <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[caseData.status as keyof typeof statusColors]}`}>
           {{'open':'Abierto','in_progress':'En Progreso','pending':'Pendiente','closed':'Cerrado'}[caseData.status] || caseData.status.replace('_', ' ')}
         </span>
-        <FiFlag className={`w-4 h-4 ${priorityColors[caseData.priority]}`} />
+        <FiFlag className={`w-4 h-4 ${priorityColors[caseData.priority as keyof typeof priorityColors]}`} />
       </div>
 
       <h3 className="text-lg font-semibold text-legal-900 dark:text-white mb-1">

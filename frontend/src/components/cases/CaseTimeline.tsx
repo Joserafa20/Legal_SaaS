@@ -36,7 +36,7 @@ export default function CaseTimeline({ caseId }: CaseTimelineProps) {
       document_added: <FiFileText className="w-4 h-4" />,
       note_added: <FiMessageSquare className="w-4 h-4" />,
     }
-    return icons[type] || <FiClock className="w-4 h-4" />
+    return icons[type as keyof typeof icons] || <FiClock className="w-4 h-4" />
   }
 
   const getEventColor = (type: TimelineEvent['type']) => {
@@ -47,7 +47,7 @@ export default function CaseTimeline({ caseId }: CaseTimelineProps) {
       document_added: 'bg-purple-500',
       note_added: 'bg-gray-500',
     }
-    return colors[type] || 'bg-gray-500'
+    return colors[type as keyof typeof colors] || 'bg-gray-500'
   }
 
   if (isLoading) return <Loading text="Cargando línea de tiempo..." />
