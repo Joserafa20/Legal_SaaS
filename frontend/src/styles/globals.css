@@ -4,11 +4,11 @@
 
 @layer base {
   body {
-    @apply bg-surface font-body text-on-surface antialiased;
+    @apply bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased;
   }
 
   h1, h2, h3, h4 {
-    @apply font-headline text-balance;
+    @apply text-balance;
   }
 
   p {
@@ -16,57 +16,53 @@
   }
 
   ::selection {
-    @apply bg-primary-fixed-dim/30 text-primary;
+    @apply bg-primary-500/20 text-primary-900 dark:text-primary-100;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-container/50 disabled:opacity-50 disabled:pointer-events-none font-label;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-50 dark:focus:ring-offset-neutral-900 disabled:opacity-50 disabled:pointer-events-none;
   }
 
   .btn-primary {
-    @apply bg-primary-container text-white hover:brightness-110 active:scale-[0.98] shadow-ambient;
+    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus:ring-primary-500 shadow-sm;
   }
 
   .btn-secondary {
-    @apply bg-surface-high text-on-surface hover:bg-surface-highest active:bg-surface-container;
+    @apply bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700 active:bg-neutral-100 dark:active:bg-neutral-600 focus:ring-neutral-400 shadow-sm;
   }
 
   .btn-danger {
-    @apply bg-error text-white hover:brightness-110 active:scale-[0.98];
+    @apply bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500 shadow-sm;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-on-surface-variant hover:bg-surface-container active:bg-surface-high;
+    @apply bg-transparent text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 active:bg-neutral-200 dark:active:bg-neutral-700 focus:ring-neutral-400;
   }
 
   .card {
-    @apply bg-surface-lowest rounded-xl;
+    @apply bg-white dark:bg-neutral-800 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700;
   }
 
   .card-hover {
-    @apply card transition-all duration-200 hover:bg-surface-low;
+    @apply card transition-all duration-200 hover:shadow-md hover:border-neutral-300 dark:hover:border-neutral-600;
   }
 
   .input {
-    @apply w-full h-12 px-4 text-sm bg-surface-low rounded-lg text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container transition-all;
+    @apply w-full px-4 py-2.5 text-sm bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-500 transition-all duration-200;
   }
 
   .label {
-    @apply block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5;
+    @apply block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5;
   }
 
   .badge {
-    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-bold;
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
   }
 
   .section-title {
-    @apply text-xl font-headline font-bold text-primary;
-  }
-
-  .glass-panel {
-    @apply bg-surface-lowest/70 backdrop-blur-xl;
+    @apply text-lg font-semibold text-neutral-900 dark:text-neutral-100;
   }
 }
 
@@ -96,11 +92,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-outline-variant rounded-full;
+  @apply bg-neutral-300 dark:bg-neutral-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-outline;
+  @apply bg-neutral-400 dark:bg-neutral-500;
 }
 
 @media (prefers-reduced-motion: reduce) {
