@@ -4,124 +4,69 @@
 
 @layer base {
   body {
-    @apply antialiased;
-    background-color: #f7f9fc;
-    color: #191c1e;
-    font-family: Inter, system-ui, sans-serif;
-  }
-
-  .dark body {
-    background-color: #0d0e0f;
-    color: #e0e3e6;
+    @apply bg-surface font-body text-on-surface antialiased;
   }
 
   h1, h2, h3, h4 {
-    font-family: Public Sans, system-ui, sans-serif;
-    text-wrap: balance;
+    @apply font-headline text-balance;
   }
 
   p {
-    text-wrap: pretty;
+    @apply text-pretty;
   }
 
   ::selection {
-    background-color: #aac7fd4d;
-    color: #001430;
+    @apply bg-primary-fixed-dim/30 text-primary;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-container/50 disabled:opacity-50 disabled:pointer-events-none;
-    font-family: Inter, system-ui, sans-serif;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-container/50 disabled:opacity-50 disabled:pointer-events-none font-label;
   }
 
   .btn-primary {
-    background-color: #002855;
-    color: #ffffff;
-    box-shadow: 0 8px 32px 0 rgba(0, 20, 48, 0.06);
+    @apply bg-primary-container text-white hover:brightness-110 active:scale-[0.98] shadow-ambient;
   }
-  .btn-primary:hover { filter: brightness(1.1); }
-  .btn-primary:active { transform: scale(0.98); }
 
   .btn-secondary {
-    background-color: #e6e8eb;
-    color: #191c1e;
+    @apply bg-surface-high text-on-surface hover:bg-surface-highest active:bg-surface-container;
   }
-  .btn-secondary:hover { background-color: #e0e3e6; }
-  .btn-secondary:active { background-color: #eceef1; }
 
   .btn-danger {
-    background-color: #ba1a1a;
-    color: #ffffff;
+    @apply bg-error text-white hover:brightness-110 active:scale-[0.98];
   }
-  .btn-danger:hover { filter: brightness(1.1); }
 
   .btn-ghost {
-    background-color: transparent;
-    color: #43474f;
+    @apply bg-transparent text-on-surface-variant hover:bg-surface-container active:bg-surface-high;
   }
-  .btn-ghost:hover { background-color: #eceef1; }
-  .btn-ghost:active { background-color: #e6e8eb; }
 
   .card {
-    background-color: #ffffff;
-    border-radius: 0.75rem;
+    @apply bg-surface-lowest rounded-xl;
   }
 
   .card-hover {
-    background-color: #ffffff;
-    border-radius: 0.75rem;
-    transition: all 0.2s;
+    @apply card transition-all duration-200 hover:bg-surface-low;
   }
-  .card-hover:hover { background-color: #f2f4f7; }
 
   .input {
-    width: 100%;
-    height: 3rem;
-    padding: 0 1rem;
-    font-size: 0.875rem;
-    background-color: #f2f4f7;
-    border-radius: 0.5rem;
-    color: #191c1e;
-    outline: none;
-    transition: all 0.2s;
+    @apply w-full h-12 px-4 text-sm bg-surface-low rounded-lg text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container transition-all;
   }
-  .input::placeholder { color: #747780; }
-  .input:focus { ring: 2px solid #002855; box-shadow: 0 0 0 2px #002855; }
-  .dark .input { background-color: #262935; color: #e0e3e6; }
 
   .label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #43474f;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.375rem;
+    @apply block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5;
   }
 
   .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    font-size: 0.625rem;
-    font-weight: 700;
+    @apply inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-bold;
   }
 
   .section-title {
-    font-family: Public Sans, system-ui, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #001430;
+    @apply text-xl font-headline font-bold text-primary;
   }
 
   .glass-panel {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    @apply bg-surface-lowest/70 backdrop-blur-xl;
   }
 }
 
@@ -147,16 +92,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #c4c6d0;
-  border-radius: 9999px;
+  @apply bg-outline-variant rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #747780;
+  @apply bg-outline;
 }
 
 @media (prefers-reduced-motion: reduce) {
