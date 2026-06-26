@@ -14,34 +14,34 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white dark:bg-legal-800 shadow-sm border-b border-legal-200 dark:border-legal-700">
+    <nav className="bg-surface-container-lowest border-b border-legal-100/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/dashboard" className="flex items-center">
-              <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
-                Legal SaaS Colombia
+              <span className="text-xl font-bold font-display text-primary tracking-tight">
+                Legal SaaS
               </span>
             </Link>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2 text-legal-600 dark:text-legal-300 hover:text-primary-600 dark:hover:text-primary-400"
+              className="p-2 text-legal-500 hover:text-primary hover:bg-surface-container-low rounded-md transition-colors"
             >
               {isDark ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
             </button>
 
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center text-legal-700 dark:text-legal-200">
-                <FiUser className="w-4 h-4 mr-2" />
+            <div className="flex items-center gap-3">
+              <div className="flex items-center text-legal-700">
+                <FiUser className="w-4 h-4 mr-2 text-legal-400" />
                 <span className="text-sm font-medium">{user?.name}</span>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="flex items-center text-legal-600 dark:text-legal-300 hover:text-red-600 dark:hover:text-red-400"
+                className="flex items-center p-2 text-legal-500 hover:text-error hover:bg-error-50 rounded-md transition-colors"
               >
                 <FiLogOut className="w-5 h-5" />
               </button>

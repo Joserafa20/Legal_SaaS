@@ -59,12 +59,23 @@ class CaseService:
         lawyer_id: int,
         page: int = 1,
         per_page: int = 20,
-        status: Optional[str] = None
+        status: Optional[str] = None,
+        search: Optional[str] = None
     ) -> tuple[List[Case], int]:
         query = select(Case).where(Case.assigned_lawyer_id == lawyer_id)
         
         if status:
             query = query.where(Case.status == status)
+        
+        if search:
+            pattern = f"%{search}%"
+            query = query.where(
+                Case.title.ilike(pattern) |
+                Case.description.ilike(pattern) |
+                Case.case_number.ilike(pattern) |
+                Case.client_name.ilike(pattern) |
+                Case.client_email.ilike(pattern)
+            )
         
         count_result = await db.execute(
             select(func.count()).select_from(query.subquery())
@@ -106,12 +117,23 @@ class CaseService:
         db: AsyncSession,
         page: int = 1,
         per_page: int = 20,
-        status: Optional[str] = None
+        status: Optional[str] = None,
+        search: Optional[str] = None
     ) -> tuple[List[Case], int]:
         query = select(Case)
         
         if status:
             query = query.where(Case.status == status)
+        
+        if search:
+            pattern = f"%{search}%"
+            query = query.where(
+                Case.title.ilike(pattern) |
+                Case.description.ilike(pattern) |
+                Case.case_number.ilike(pattern) |
+                Case.client_name.ilike(pattern) |
+                Case.client_email.ilike(pattern)
+            )
         
         count_result = await db.execute(
             select(func.count()).select_from(query.subquery())

@@ -1,35 +1,71 @@
 import { NavLink } from 'react-router-dom'
-import { FiHome, FiBriefcase, FiCalendar, FiMessageSquare, FiUsers } from 'react-icons/fi'
-
-const navigation = [
-  { name: 'Panel', to: '/dashboard', icon: FiHome },
-  { name: 'Casos', to: '/cases', icon: FiBriefcase },
-  { name: 'Calendario', to: '/calendar', icon: FiCalendar },
-  { name: 'Asistente IA', to: '/ai-assistant', icon: FiMessageSquare },
-  { name: 'Usuarios', to: '/users', icon: FiUsers },
-]
+import { FiHome, FiCalendar, FiMessageSquare, FiUsers } from 'react-icons/fi'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function Sidebar() {
+  const { user: currentUser } = useAuth()
+  const isAdmin = typeof currentUser?.role === 'object'
+    && currentUser?.role !== null
+    && 'name' in currentUser.role
+    && currentUser.role.name === 'admin'
   return (
-    <div className="w-64 bg-white dark:bg-legal-800 border-r border-legal-200 dark:border-legal-700 min-h-screen">
+    <div className="w-64 bg-surface-container-low min-h-screen">
       <div className="p-4">
         <nav className="space-y-1">
-          {navigation.map((item) => (
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-legal-600 hover:bg-surface-container hover:text-primary'
+              }`
+            }
+          >
+            <FiHome className="mr-3 h-5 w-5" />
+            Panel
+          </NavLink>
+          <NavLink
+            to="/calendar"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-legal-600 hover:bg-surface-container hover:text-primary'
+              }`
+            }
+          >
+            <FiCalendar className="mr-3 h-5 w-5" />
+            Calendario
+          </NavLink>
+          <NavLink
+            to="/ai-assistant"
+            className={({ isActive }) =>
+              `flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-legal-600 hover:bg-surface-container hover:text-primary'
+              }`
+            }
+          >
+            <FiMessageSquare className="mr-3 h-5 w-5" />
+            Asistente IA
+          </NavLink>
+          {isAdmin && (
             <NavLink
-              key={item.name}
-              to={item.to}
+              to="/users"
               className={({ isActive }) =>
-                `flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                `flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${
                   isActive
-                    ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                    : 'text-legal-600 dark:text-legal-300 hover:bg-legal-50 dark:hover:bg-legal-700'
+                    ? 'bg-primary text-white'
+                    : 'text-legal-600 hover:bg-surface-container hover:text-primary'
                 }`
               }
             >
-              <item.icon className="mr-3 h-5 w-5" />
-              {item.name}
+              <FiUsers className="mr-3 h-5 w-5" />
+              Usuarios
             </NavLink>
-          ))}
+          )}
         </nav>
       </div>
     </div>

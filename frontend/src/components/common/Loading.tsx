@@ -13,9 +13,9 @@ export default function Loading({ size = 'md', text }: LoadingProps) {
   return (
     <div className="flex flex-col items-center justify-center p-8">
       <div
-        className={`${sizeClasses[size]} border-4 border-legal-200 border-t-primary-600 rounded-full animate-spin`}
+        className={`${sizeClasses[size]} border-2 border-legal-200 border-t-primary rounded-full animate-spin`}
       />
-      {text && <p className="mt-4 text-legal-600 dark:text-legal-300">{text}</p>}
+      {text && <p className="mt-4 text-legal-500">{text}</p>}
     </div>
   )
 }

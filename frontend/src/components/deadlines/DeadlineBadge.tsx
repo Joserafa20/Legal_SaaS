@@ -8,7 +8,7 @@ interface DeadlineBadgeProps {
 export default function DeadlineBadge({ deadline }: DeadlineBadgeProps) {
   const getBadgeStyle = () => {
     if (deadline.status === 'completed') {
-      return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+      return 'bg-primary-container/10 text-primary-container'
     }
 
     const dueDate = new Date(deadline.dueDate)
@@ -16,15 +16,15 @@ export default function DeadlineBadge({ deadline }: DeadlineBadgeProps) {
     const daysUntilDue = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
 
     if (daysUntilDue < 0) {
-      return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+      return 'bg-error-50 text-error'
     }
     if (daysUntilDue <= 3) {
-      return 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'
+      return 'bg-tertiary-50 text-tertiary-800'
     }
     if (deadline.priority === 'high' || deadline.priority === 'urgent') {
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+      return 'bg-tertiary-100 text-tertiary-700'
     }
-    return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+    return 'bg-primary/5 text-primary-container'
   }
 
   const getIcon = () => {

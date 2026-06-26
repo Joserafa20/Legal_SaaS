@@ -3,38 +3,119 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-surface: 247 249 252;
+    --color-surface-bright: 247 249 252;
+    --color-surface-dim: 216 218 221;
+    --color-surface-container: 236 238 241;
+    --color-surface-container-low: 242 244 247;
+    --color-surface-container-lowest: 255 255 255;
+    --color-surface-container-high: 230 232 235;
+    --color-surface-container-highest: 224 227 230;
+    --color-primary: 0 20 48;
+    --color-primary-container: 0 40 85;
+    --color-primary-fixed: 214 227 255;
+    --color-primary-fixed-dim: 170 199 253;
+    --color-tertiary: 197 168 106;
+    --color-error: 186 26 26;
+    --color-legal-900: 25 28 30;
+    --color-legal-800: 45 49 51;
+    --color-legal-700: 68 71 74;
+    --color-legal-600: 92 95 98;
+    --color-legal-500: 116 119 128;
+    --color-legal-400: 140 145 150;
+    --color-legal-300: 168 172 176;
+    --color-legal-200: 196 199 202;
+    --color-legal-100: 224 227 230;
+    --color-legal-50: 242 244 247;
+    --color-legal-950: 13 15 16;
+    --color-white: 255 255 255;
+  }
+
+  .dark {
+    --color-surface: 13 15 16;
+    --color-surface-bright: 45 49 51;
+    --color-surface-dim: 0 0 0;
+    --color-surface-container: 45 49 51;
+    --color-surface-container-low: 25 28 30;
+    --color-surface-container-lowest: 25 28 30;
+    --color-surface-container-high: 68 71 74;
+    --color-surface-container-highest: 92 95 98;
+    --color-primary: 170 199 253;
+    --color-primary-container: 214 227 255;
+    --color-primary-fixed: 214 227 255;
+    --color-primary-fixed-dim: 170 199 253;
+    --color-tertiary: 197 168 106;
+    --color-error: 255 180 171;
+    --color-legal-900: 255 255 255;
+    --color-legal-800: 224 227 230;
+    --color-legal-700: 196 199 202;
+    --color-legal-600: 168 172 176;
+    --color-legal-500: 140 145 150;
+    --color-legal-400: 116 119 128;
+    --color-legal-300: 92 95 98;
+    --color-legal-200: 68 71 74;
+    --color-legal-100: 45 49 51;
+    --color-legal-50: 25 28 30;
+    --color-legal-950: 13 15 16;
+    --color-white: 25 28 30;
+  }
+
   body {
-    @apply bg-legal-50 dark:bg-legal-900 text-legal-900 dark:text-white;
+    @apply bg-surface text-legal-900 antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
   }
 }
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-6 py-2.5 rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center gap-2;
   }
 
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    @apply btn;
+    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-primary-container)));
+    @apply text-white hover:opacity-90 focus:ring-primary-container shadow-sm hover:shadow-lg active:scale-[0.97];
   }
 
   .btn-secondary {
-    @apply bg-legal-200 dark:bg-legal-700 text-legal-900 dark:text-white hover:bg-legal-300 dark:hover:bg-legal-600 focus:ring-legal-500;
+    @apply bg-surface-container-highest text-legal-800 hover:bg-surface-container-high focus:ring-legal-400;
   }
 
   .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+    @apply bg-error text-white hover:opacity-90 focus:ring-error;
+  }
+
+  .btn-ghost {
+    @apply text-legal-600 hover:bg-surface-container-low focus:ring-legal-400;
   }
 
   .card {
-    @apply bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 p-4;
+    @apply bg-surface-container-lowest rounded-xl p-4;
+  }
+
+  .card-surface {
+    @apply bg-surface-container-low rounded-xl p-4;
   }
 
   .input {
-    @apply w-full px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-legal-700 text-legal-900 dark:text-white;
+    @apply w-full px-4 py-2.5 rounded-xl border border-legal-200 focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none bg-surface-container-lowest text-legal-900 placeholder-legal-400;
   }
 
   .label {
-    @apply block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1;
+    @apply block text-sm font-medium text-legal-700 mb-1;
+  }
+
+  .glass-panel {
+    @apply bg-surface-container-lowest/70 backdrop-blur-[20px] rounded-xl;
+  }
+
+  .ai-card {
+    @apply rounded-xl p-4 border-l-4 border-tertiary;
+    background: color-mix(in srgb, rgb(var(--color-tertiary)) 10%, transparent);
   }
 }
 
@@ -54,20 +135,19 @@
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-legal-100 dark:bg-legal-800;
+  @apply bg-surface-container-low;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-legal-300 dark:bg-legal-600 rounded-full;
+  @apply bg-legal-300 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-legal-400 dark:bg-legal-500;
+  @apply bg-legal-400;
 }

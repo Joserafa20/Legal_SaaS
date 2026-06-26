@@ -75,6 +75,13 @@ export interface AIMessage {
   timestamp: string
 }
 
+export interface Holiday {
+  id: number
+  date: string
+  name: string
+  type: string | null
+}
+
 export interface ApiResponse<T> {
   data: T
   message?: string

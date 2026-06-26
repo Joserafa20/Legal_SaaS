@@ -77,11 +77,11 @@ export default function Users() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-legal-900 dark:text-white">Usuarios</h1>
+        <h1 className="text-2xl font-bold font-display text-primary">Usuarios</h1>
         {isAdmin && (
           <button
             onClick={() => setShowForm(!showForm)}
-            className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+            className="btn-primary flex items-center gap-2"
           >
             <FiUserPlus className="w-5 h-5" />
             Nuevo Usuario
@@ -90,53 +90,53 @@ export default function Users() {
       </div>
 
       {showForm && (
-        <div className="bg-white dark:bg-legal-800 rounded-xl p-6 border border-legal-200 dark:border-legal-700">
-          <h2 className="text-lg font-semibold text-legal-900 dark:text-white mb-4">Crear Nuevo Usuario</h2>
+        <div className="card">
+          <h2 className="text-lg font-semibold font-display text-primary mb-4">Crear Nuevo Usuario</h2>
           <form onSubmit={handleCreate} className="space-y-4 max-w-md">
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Nombre Completo</label>
+              <label className="label">Nombre Completo</label>
               <div className="relative">
                 <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10"
                   placeholder="Nombre del abogado"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Correo Electrónico</label>
+              <label className="label">Correo Electrónico</label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10"
                   placeholder="correo@ejemplo.com"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Contraseña</label>
+              <label className="label">Contraseña</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                className="input"
                 placeholder="Contraseña"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-legal-700 dark:text-legal-200 mb-1">Rol</label>
+              <label className="label">Rol</label>
               <div className="relative">
                 <FiShield className="absolute left-3 top-1/2 -translate-y-1/2 text-legal-400" />
                 <select
                   value={roleId}
                   onChange={(e) => setRoleId(Number(e.target.value))}
-                  className="w-full pl-10 pr-4 py-2 border border-legal-300 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+                  className="input pl-10"
                 >
                   <option value={1}>Admin</option>
                   <option value={2}>Abogado</option>
@@ -146,7 +146,7 @@ export default function Users() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+              className="btn-primary"
             >
               {submitting ? 'Creando...' : 'Crear Usuario'}
             </button>
@@ -154,47 +154,49 @@ export default function Users() {
         </div>
       )}
 
-      <div className="bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-legal-200 dark:border-legal-700">
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Nombre</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Correo</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Rol</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-legal-500">Estado</th>
-              {isAdmin && <th className="text-right px-4 py-3 text-sm font-medium text-legal-500">Acciones</th>}
+            <tr className="bg-surface-container-low">
+              <th className="text-left px-4 py-4 text-sm font-medium text-legal-500">Nombre</th>
+              <th className="text-left px-4 py-4 text-sm font-medium text-legal-500">Correo</th>
+              <th className="text-left px-4 py-4 text-sm font-medium text-legal-500">Rol</th>
+              <th className="text-left px-4 py-4 text-sm font-medium text-legal-500">Estado</th>
+              {isAdmin && <th className="text-right px-4 py-4 text-sm font-medium text-legal-500">Acciones</th>}
             </tr>
           </thead>
-          <tbody className="divide-y divide-legal-200 dark:divide-legal-700">
+          <tbody>
             {users.map((u) => (
-              <tr key={u.id} className="hover:bg-legal-50 dark:hover:bg-legal-700/50">
-                <td className="px-4 py-3 text-sm text-legal-900 dark:text-white">{u.full_name}</td>
-                <td className="px-4 py-3 text-sm text-legal-600 dark:text-legal-300">{u.email}</td>
-                <td className="px-4 py-3 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    (typeof u.role === 'object' && u.role?.name === 'admin')
-                      ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
-                      : (typeof u.role === 'object' && u.role?.name === 'abogado')
-                      ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
-                      : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                  }`}>
-                    {typeof u.role === 'object' ? u.role.name : u.role}
+              <tr key={u.id} className="hover:bg-surface-container-low transition-colors">
+                <td className="px-4 py-4 text-sm text-legal-900">{u.full_name}</td>
+                <td className="px-4 py-4 text-sm text-legal-500">{u.email}</td>
+                <td className="px-4 py-4 text-sm">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${
+                      (typeof u.role === 'object' && u.role?.name === 'admin')
+                        ? 'bg-primary'
+                        : 'bg-primary-container'
+                    }`} />
+                    <span className="text-legal-600">
+                      {typeof u.role === 'object' ? u.role.name : u.role}
+                    </span>
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    u.is_active !== false
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                      : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                  }`}>
-                    {u.is_active !== false ? 'Activo' : 'Inactivo'}
+                <td className="px-4 py-4 text-sm">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${
+                      u.is_active !== false ? 'bg-primary-container' : 'bg-error'
+                    }`} />
+                    <span className="text-legal-600">
+                      {u.is_active !== false ? 'Activo' : 'Inactivo'}
+                    </span>
                   </span>
                 </td>
                 {isAdmin && (
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-4 text-right">
                     <button
                       onClick={() => handleDelete(u)}
-                      className="p-1 text-legal-400 hover:text-red-600 transition-colors"
+                      className="p-1 text-legal-400 hover:text-error transition-colors"
                       title="Eliminar usuario"
                     >
                       <FiTrash2 className="w-4 h-4" />

@@ -18,6 +18,9 @@ dist/
 uploads/
 case_documents/
 
+# Opencode config
+opencode.json
+
 # IDE
 .idea/
 .vscode/

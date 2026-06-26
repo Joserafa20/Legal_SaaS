@@ -24,13 +24,14 @@ async def list_cases(
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=100),
     status: Optional[str] = None,
+    search: Optional[str] = None,
     current_user: User = Depends(require_role(["admin", "abogado"])),
     db: AsyncSession = Depends(get_db)
 ):
     if current_user.role.name == "admin":
-        cases, total = await CaseService.get_all_cases(db, page, per_page, status)
+        cases, total = await CaseService.get_all_cases(db, page, per_page, status, search)
     else:
-        cases, total = await CaseService.get_cases_by_lawyer(db, current_user.id, page, per_page, status)
+        cases, total = await CaseService.get_cases_by_lawyer(db, current_user.id, page, per_page, status, search)
     
     return CaseListResponse(
         cases=cases,

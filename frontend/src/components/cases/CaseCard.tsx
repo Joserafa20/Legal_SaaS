@@ -6,49 +6,53 @@ interface CaseCardProps {
   caseData: Case
 }
 
-export default function CaseCard({ caseData }: CaseCardProps) {
-  const statusColors = {
-    open: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    in_progress: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-    pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-    closed: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
-  }
+const statusStyles: Record<string, { dot: string; label: string }> = {
+  open: { dot: 'bg-primary', label: 'Abierto' },
+  in_progress: { dot: 'bg-primary-container', label: 'En Progreso' },
+  pending: { dot: 'bg-tertiary-500', label: 'Pendiente' },
+  closed: { dot: 'bg-legal-400', label: 'Cerrado' },
+}
 
-  const priorityColors = {
-    low: 'text-legal-500',
-    medium: 'text-yellow-500',
-    high: 'text-orange-500',
-    urgent: 'text-red-500',
-  }
+const priorityStyles: Record<string, string> = {
+  low: 'text-legal-400',
+  medium: 'text-tertiary-500',
+  high: 'text-tertiary-700',
+  urgent: 'text-error',
+}
+
+export default function CaseCard({ caseData }: CaseCardProps) {
+  const status = statusStyles[caseData.status] || statusStyles.open
+  const priorityColor = priorityStyles[caseData.priority] || priorityStyles.low
 
   return (
     <Link
       to={`/cases/${caseData.id}`}
-      className="block p-4 bg-white dark:bg-legal-800 rounded-xl border border-legal-200 dark:border-legal-700 hover:shadow-lg transition-shadow"
+      className="block card hover:shadow-ambient transition-shadow"
     >
-      <div className="flex items-start justify-between mb-2">
-        <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[caseData.status as keyof typeof statusColors]}`}>
-          {{'open':'Abierto','in_progress':'En Progreso','pending':'Pendiente','closed':'Cerrado'}[caseData.status] || caseData.status.replace('_', ' ')}
+      <div className="flex items-start justify-between mb-3">
+        <span className="inline-flex items-center gap-1.5">
+          <span className={`w-2 h-2 rounded-full ${status.dot}`} />
+          <span className="text-xs font-medium text-legal-600">{status.label}</span>
         </span>
-        <FiFlag className={`w-4 h-4 ${priorityColors[caseData.priority as keyof typeof priorityColors]}`} />
+        <FiFlag className={`w-4 h-4 ${priorityColor}`} />
       </div>
 
-      <h3 className="text-lg font-semibold text-legal-900 dark:text-white mb-1">
+      <h3 className="text-lg font-semibold font-display text-primary mb-1">
         {caseData.title}
       </h3>
 
-      <p className="text-sm text-legal-600 dark:text-legal-300 mb-3 line-clamp-2">
+      <p className="text-sm text-legal-500 mb-4 line-clamp-2">
         {caseData.description}
       </p>
 
-      <div className="flex items-center text-sm text-legal-500 dark:text-legal-400 space-x-4">
+      <div className="flex items-center text-sm text-legal-500 gap-4">
         <span className="flex items-center">
-          <FiUser className="w-4 h-4 mr-1" />
+          <FiUser className="w-4 h-4 mr-1.5" />
           {caseData.clientName}
         </span>
         {caseData.nextDeadline && (
           <span className="flex items-center">
-            <FiCalendar className="w-4 h-4 mr-1" />
+            <FiCalendar className="w-4 h-4 mr-1.5" />
             {new Date(caseData.nextDeadline).toLocaleDateString()}
           </span>
         )}

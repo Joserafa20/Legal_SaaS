@@ -10,15 +10,16 @@ export default function CaseList() {
   const [isLoading, setIsLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('')
+  const [appliedSearch, setAppliedSearch] = useState('')
 
   useEffect(() => {
     loadCases()
-  }, [statusFilter])
+  }, [statusFilter, appliedSearch])
 
   const loadCases = async () => {
     try {
       setIsLoading(true)
-      const data = await caseService.getAll({ status: statusFilter, search: searchQuery })
+      const data = await caseService.getAll({ status: statusFilter, search: appliedSearch })
       setCases(data)
     } catch {
       console.error('Failed to load cases')
@@ -29,7 +30,7 @@ export default function CaseList() {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault()
-    loadCases()
+    setAppliedSearch(searchQuery)
   }
 
   if (isLoading) return <Loading text="Cargando casos..." />
@@ -45,7 +46,7 @@ export default function CaseList() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar casos..."
-              className="w-full pl-10 pr-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+              className="input pl-10"
             />
           </div>
         </form>
@@ -55,12 +56,12 @@ export default function CaseList() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-legal-300 dark:border-legal-600 rounded-lg bg-white dark:bg-legal-700 text-legal-900 dark:text-white"
+            className="input"
           >
             <option value="">Todos los Estados</option>
-            <option value="open">Abierto</option>
-            <option value="in_progress">En Progreso</option>
-            <option value="pending">Pendiente</option>
+            <option value="active">Activo</option>
+            <option value="suspended">Suspendido</option>
+            <option value="archived">Archivado</option>
             <option value="closed">Cerrado</option>
           </select>
         </div>

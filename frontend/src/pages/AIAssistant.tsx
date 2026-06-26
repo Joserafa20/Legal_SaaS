@@ -6,8 +6,8 @@ export default function AIAssistant() {
   const caseId = searchParams.get('caseId') || undefined
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-legal-900 dark:text-white">Asistente IA Legal</h1>
+    <div className="space-y-6 h-full">
+      <h1 className="text-2xl font-bold font-display text-primary">Asistente IA Legal</h1>
       <AIChat caseId={caseId} />
     </div>
   )

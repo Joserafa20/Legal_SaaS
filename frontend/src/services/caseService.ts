@@ -88,4 +88,9 @@ export const caseService = {
     const response = await api.get('/cases', { params: { search: query } })
     return (response.data.cases || []).map(mapCase)
   },
+
+  async assign(caseId: string, lawyerId: number): Promise<Case> {
+    const response = await api.post(`/cases/${caseId}/assign`, { lawyer_id: lawyerId })
+    return mapCase(response.data)
+  },
 }

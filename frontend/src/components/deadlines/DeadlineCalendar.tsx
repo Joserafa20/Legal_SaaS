@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Deadline } from '../../types'
+import { Deadline, Holiday } from '../../types'
 import { deadlineService } from '../../services/deadlineService'
+import { holidayService } from '../../services/holidayService'
 import Loading from '../common/Loading'
 import { FiChevronLeft, FiChevronRight, FiPlus } from 'react-icons/fi'
 import {
@@ -19,11 +20,20 @@ import {
 export default function DeadlineCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [deadlines, setDeadlines] = useState<Deadline[]>([])
+  const [holidays, setHolidays] = useState<Holiday[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     loadDeadlines()
+    loadHolidays()
   }, [currentDate])
+
+  const formatDateStr = (d: Date) => {
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
 
   const loadDeadlines = async () => {
     try {
@@ -34,6 +44,17 @@ export default function DeadlineCalendar() {
       setDeadlines(data)
     } catch {
       console.error('Failed to load deadlines')
+    }
+  }
+
+  const loadHolidays = async () => {
+    try {
+      const startDate = formatDateStr(startOfMonth(currentDate))
+      const endDate = formatDateStr(endOfMonth(currentDate))
+      const data = await holidayService.getByRange(startDate, endDate)
+      setHolidays(data)
+    } catch {
+      console.error('Failed to load holidays')
     } finally {
       setIsLoading(false)
     }
@@ -41,21 +62,21 @@ export default function DeadlineCalendar() {
 
   const renderHeader = () => (
     <div className="flex items-center justify-between mb-4">
-      <h2 className="text-xl font-semibold text-legal-900 dark:text-white">
+      <h2 className="text-xl font-semibold font-display text-primary">
         {format(currentDate, 'MMMM yyyy')}
       </h2>
       <div className="flex items-center gap-2">
         <button
           onClick={() => setCurrentDate(subMonths(currentDate, 1))}
-          className="p-2 hover:bg-legal-100 dark:hover:bg-legal-700 rounded-lg"
+          className="p-2 hover:bg-surface-container-low rounded-md text-legal-500"
         >
-          <FiChevronLeft className="w-5 h-5 text-legal-600 dark:text-legal-300" />
+          <FiChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={() => setCurrentDate(addMonths(currentDate, 1))}
-          className="p-2 hover:bg-legal-100 dark:hover:bg-legal-700 rounded-lg"
+          className="p-2 hover:bg-surface-container-low rounded-md text-legal-500"
         >
-          <FiChevronRight className="w-5 h-5 text-legal-600 dark:text-legal-300" />
+          <FiChevronRight className="w-5 h-5" />
         </button>
       </div>
     </div>
@@ -91,25 +112,31 @@ export default function DeadlineCalendar() {
           isSameDay(new Date(d.dueDate), cloneDay)
         )
 
+        const dayStr = formatDateStr(cloneDay)
+        const holiday = holidays.find((h) => h.date === dayStr)
+        const isHoliday = !!holiday
+
         days.push(
           <div
             key={day.toString()}
-            className={`min-h-[80px] p-2 border border-legal-200 dark:border-legal-700 ${
-              isSameMonth(day, monthStart) ? 'bg-white dark:bg-legal-800' : 'bg-legal-50 dark:bg-legal-900'
-            } ${isSameDay(day, new Date()) ? 'ring-2 ring-primary-500' : ''}`}
+              className={`min-h-[80px] p-2 transition-colors border border-legal-200/50 ${
+               isSameMonth(day, monthStart) ? 'bg-surface-container-lowest' : 'bg-surface-container-low'
+             } ${isSameDay(day, new Date()) ? 'ring-2 ring-primary ring-inset' : ''} ${isHoliday ? 'bg-tertiary-50' : ''}`}
           >
-            <div className={`text-sm ${isSameMonth(day, monthStart) ? 'text-legal-900 dark:text-white' : 'text-legal-400'}`}>
-              {format(day, 'd')}
+            <div className="text-sm" title={isHoliday ? holiday!.name : undefined}>
+              <span className={isHoliday ? 'text-error font-semibold' : (isSameMonth(day, monthStart) ? 'text-legal-900' : 'text-legal-400')}>
+                {format(day, 'd')}
+              </span>
             </div>
             {dayDeadlines.slice(0, 2).map((deadline) => (
               <div
                 key={deadline.id}
                 className={`text-xs p-1 mt-1 rounded ${
                   deadline.priority === 'urgent'
-                    ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                    ? 'bg-error-50 text-error'
                     : deadline.priority === 'high'
-                    ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'
-                    : 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+                    ? 'bg-tertiary-50 text-tertiary-800'
+                    : 'bg-primary/5 text-primary-container'
                 }`}
               >
                 {deadline.title}
@@ -130,16 +157,16 @@ export default function DeadlineCalendar() {
       days = []
     }
 
-    return <div className="border border-legal-200 dark:border-legal-700 rounded-lg overflow-hidden">{rows}</div>
+    return <div className="rounded-xl overflow-hidden">{rows}</div>
   }
 
   if (isLoading) return <Loading text="Cargando calendario..." />
 
   return (
-    <div className="bg-white dark:bg-legal-800 rounded-xl p-4 border border-legal-200 dark:border-legal-700">
+    <div className="card">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-legal-900 dark:text-white">Calendario de Vencimientos</h3>
-        <button className="flex items-center gap-2 px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm">
+        <h3 className="text-lg font-semibold font-display text-primary">Calendario de Vencimientos</h3>
+        <button className="btn-primary flex items-center gap-2 text-sm">
           <FiPlus className="w-4 h-4" />
           Agregar Vencimiento
         </button>
